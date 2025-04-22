@@ -8,3 +8,24 @@ services:
     volumes:
       - .:/var/www/html
     container_name: php74-mvc
+    depends_on:
+      - mysql
+    environment:
+      DB_DSN: "mysql:host=mysql;port=3306;dbname=leads;charset=utf8mb4"
+      DB_USER: "root"
+      DB_PASS: "secret"
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-leads
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: leads
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

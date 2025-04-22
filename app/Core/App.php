@@ -4,9 +4,10 @@ namespace App\Core;
 
 class App
 {
-    public function run()
+    public function run(): void
     {
-        $router = new Router();
+        $container = new Container();
+        $router = new Router($container);
         $router->dispatch($_SERVER['REQUEST_URI']);
     }
 }
