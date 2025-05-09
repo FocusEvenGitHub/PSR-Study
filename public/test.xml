@@ -1,0 +1,10 @@
+<leads>
+    <lead>
+        <email>joao@exemplo.com</email>
+        <source>Outdoor</source>
+    </lead>
+    <lead>
+        <email>ana@exemplo.com</email>
+        <source>TV</source>
+    </lead>
+</leads>

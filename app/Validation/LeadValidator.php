@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Validators;
+namespace App\Validation;
 
-class LeadValidator
+use App\Interfaces\ValidatorInterface;
+
+class LeadValidator implements ValidatorInterface
 {
     /**
      * Valida email e source

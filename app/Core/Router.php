@@ -11,32 +11,53 @@ class Router
         $this->container = $container;
     }
 
-    public function dispatch(string $uri)
+    /**
+     * Dispara a rota baseada na URI
+     *
+     * @param string $uri
+     */
+    public function dispatch(string $uri): void
     {
-        $uri = parse_url($uri, PHP_URL_PATH);
-        $uri = trim($uri, '/');
-        $segments = explode('/', $uri);
+        // Extrai apenas o path (/foo/bar)
+        $path = parse_url($uri, PHP_URL_PATH);
+        $path = trim($path, '/');
+        $segments = $path === '' ? [] : explode('/', $path);
 
-        $controllerName = !empty($segments[0]) ? ucfirst($segments[0]) . 'Controller' : 'LeadController';
-        $method = $segments[1] ?? 'index';
-        $params = array_slice($segments, 2);
+        // Define controller/método padrão
+        $defaultController = 'Home';
+        $defaultMethod     = 'index';
 
-        $controllerClass = "App\\Controllers\\$controllerName";
+        // Controller e método da URI
+        $controllerName = $segments[0] ?? '';
+        $methodName     = $segments[1] ?? '';
 
+        $controllerClass = 'App\\Controllers\\'
+            . ($controllerName !== '' ? ucfirst($controllerName) : $defaultController)
+            . 'Controller';
+
+        $method = $methodName !== '' ? $methodName : $defaultMethod;
+
+        // Checa existência da classe
         if (!class_exists($controllerClass)) {
             http_response_code(404);
-            echo "Controller não encontrado.";
+            echo "Controller '" . htmlspecialchars($controllerClass) . "' não encontrado.";
             return;
         }
 
+        // Instancia controladora via container
         $controller = $this->container->get($controllerClass);
 
+        // Checa método
         if (!method_exists($controller, $method)) {
             http_response_code(404);
-            echo "Método não encontrado.";
+            echo "Método '" . htmlspecialchars($method) . "' não encontrado em " . htmlspecialchars($controllerClass) . ".";
             return;
         }
 
+        // Parâmetros adicionais (após controller/método)
+        $params = array_slice($segments, 2);
+
+        // Executa ação
         call_user_func_array([$controller, $method], $params);
     }
 }

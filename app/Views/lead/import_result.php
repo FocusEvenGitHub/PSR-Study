@@ -13,3 +13,5 @@
         <li>Linha <?= $error['line'] ?>: <?= implode(', ', $error['errors']) ?></li>
     <?php endforeach; ?>
 </ul>
+
+<a href="/home">Home</a>

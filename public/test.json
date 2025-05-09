@@ -1,0 +1,14 @@
+[
+  {
+    "email": "maria@exemplo.com",
+    "source": "Facebook"
+  },
+  {
+    "email": "carlos@exemplo.com",
+    "source": "Google"
+  },
+  {
+    "email": "aline@exemplo.com",
+    "source": "Instagram"
+  }
+]

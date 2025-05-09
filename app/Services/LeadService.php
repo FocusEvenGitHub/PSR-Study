@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
-use App\Repositories\LeadRepository;
+use App\Interfaces\ServiceInterface;
 use App\DTO\LeadDTO;
+use App\Domain\Lead;
+use App\Repositories\LeadRepository;
 
-class LeadService
+class LeadService implements ServiceInterface
 {
     private LeadRepository $repository;
 
@@ -21,9 +23,7 @@ class LeadService
 
     public function createFromDTO(LeadDTO $dto): void
     {
-        // Cria entidade e salva
-        $lead = new \App\Domain\Lead($dto->getEmail(), $dto->getSource());
+        $lead = new Lead($dto->getEmail(), $dto->getSource());
         $this->repository->save($lead);
     }
 }
-
