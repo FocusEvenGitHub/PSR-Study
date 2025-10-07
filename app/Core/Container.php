@@ -28,12 +28,10 @@ class Container
      */
     public function get(string $class)
     {
-        // Se for uma interface mapeada, troca pela implementação concreta
         if (isset($this->bindings[$class])) {
             $class = $this->bindings[$class];
         }
 
-        // Se já instanciamos, retorna singleton local
         if (isset($this->instances[$class])) {
             return $this->instances[$class];
         }

@@ -4,17 +4,24 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Services\LeadImporterService;
+use App\Services\LeadService;
 use RuntimeException;
 
 class LeadController extends Controller
 {
     private LeadImporterService $importer;
-
-    public function __construct(LeadImporterService $importer)
+    private LeadService $leadService;
+    public function __construct(LeadImporterService $importer, LeadService $leadService)
     {
         $this->importer = $importer;
+        $this->leadService = $leadService;
     }
 
+    public function index(): void
+    {
+        $leads = $this->leadService->getAll();
+        $this->view('lead/index', ['leads' => $leads]);
+    }
     public function importForm(): void
     {
         $this->view('lead/import');
