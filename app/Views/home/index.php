@@ -2,8 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Página Inicial - LeadManager</title>
-</head>
+    <title><?= htmlspecialchars($title) ?></title></head>
 <body>
 <h1>Bem-vindo ao LeadManager</h1>
 <nav>
@@ -12,6 +11,6 @@
         <li><a href="/lead">Listar Leads</a></li>
     </ul>
 </nav>
-<h1><?php echo $mensagem; ?></h1>
+<h6><?= htmlspecialchars($mensagem) ?></h6>
 </body>
 </html>
